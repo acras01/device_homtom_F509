@@ -1,4 +1,3 @@
-# Copyright (C) 2016 The CyanogenMod Project
 # Copyright (C) 2017 The LineageOS Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,7 +17,8 @@ LOCAL_PATH := $(call my-dir)
 include $(CLEAR_VARS)
 
 LOCAL_SRC_FILES := atomic.c
-
+LOCAL_WHOLE_STATIC_LIBRARIES := libcutils
+LOCAL_SHARED_LIBRARIES := liblog
 LOCAL_MODULE := libatomic
 LOCAL_MODULE_TAGS := optional
 
