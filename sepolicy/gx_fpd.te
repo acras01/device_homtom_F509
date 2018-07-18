@@ -1,8 +1,6 @@
 type gx_fpd, domain;
 type gx_fpd_exec, exec_type, file_type;
-type gx_fpd_device, dev_type;
 type gx_fpd_service, service_manager_type;
-type gx_fpd_data_file, file_type, data_file_type;
 
 # gx_fpd
 init_daemon_domain(gx_fpd)
@@ -40,7 +38,21 @@ allow gx_fpd self:{ netlink_socket netlink_generic_socket } create_socket_perms_
 #allow read/write property
 set_prop(gx_fpd, system_prop)
 
-allow gx_fpd gx_fpd_service:service_manager { add find };
+# allow gx_fpd_lib_file
+allow gx_fpd gx_fpd_lib_file:file { create_file_perms getattr read };
+allow gx_fpd gx_fpd_lib_file:chr_file { rw_file_perms setattr };
+allow gx_fpd gx_fpd_lib_file:dir ra_dir_perms;
+
+# allow gx_fp_lib_file
+allow gx_fpd gx_fp_lib_file:file { create_file_perms getattr read };
+allow gx_fpd gx_fp_lib_file:chr_file { rw_file_perms setattr };
+
+allow gx_fpd fingerprintd:binder { transfer call };
+allow gx_fpd fuse:dir search;
+allow gx_fpd fuse:file { getattr open append };
+allow gx_fpd self:capability dac_override;
+allow gx_fpd storage_file:dir search;
+allow gx_fpd storage_file:lnk_file read;
 
 r_dir_file(gx_fpd, firmware_file)
 binder_call(gx_fpd, hal_fingerprint_default)
