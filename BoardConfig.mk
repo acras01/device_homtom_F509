@@ -16,7 +16,7 @@ BOARD_FLASH_BLOCK_SIZE := 4096
 
 # Legacy BLOB Support
 TARGET_NEEDS_PLATFORM_TEXT_RELOCATIONS := true
-TARGET_LD_SHIM_LIBS := /system/lib64/hw/gxfingerprint.default.so|libatomic.so
+TARGET_LD_SHIM_LIBS := /vendor/lib64/hw/gxfingerprint.default.so|libatomic.so
 
 #Fingerprint
 BOARD_SEPOLICY_DIRS += device/homtom/F509/sepolicy

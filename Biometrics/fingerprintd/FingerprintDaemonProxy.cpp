@@ -52,12 +52,17 @@ void FingerprintDaemonProxy::hal_notify_callback(const fingerprint_msg_t *msg) {
     const int64_t device = (int64_t) instance->mDevice;
     switch (msg->type) {
         case FINGERPRINT_ERROR:
+            ALOGD("onError(%d)", msg->data.error);
             callback->onError(device, msg->data.error);
             break;
         case FINGERPRINT_ACQUIRED:
+            ALOGD("onAcquired(%d)", msg->data.acquired.acquired_info);
             callback->onAcquired(device, msg->data.acquired.acquired_info);
             break;
         case FINGERPRINT_AUTHENTICATED:
+            ALOGD("onAuthenticated(fid=%d, gid=%d)",
+                    msg->data.authenticated.finger.fid,
+                    msg->data.authenticated.finger.gid);
             if (msg->data.authenticated.finger.fid != 0) {
                 const uint8_t* hat = reinterpret_cast<const uint8_t *>(&msg->data.authenticated.hat);
                 instance->notifyKeystore(hat, sizeof(msg->data.authenticated.hat));
@@ -67,17 +72,28 @@ void FingerprintDaemonProxy::hal_notify_callback(const fingerprint_msg_t *msg) {
                     msg->data.authenticated.finger.gid);
             break;
         case FINGERPRINT_TEMPLATE_ENROLLING:
+            ALOGD("onEnrollResult(fid=%d, gid=%d, rem=%d)",
+                    msg->data.enroll.finger.fid,
+                    msg->data.enroll.finger.gid,
+                    msg->data.enroll.samples_remaining);
             callback->onEnrollResult(device,
                     msg->data.enroll.finger.fid,
                     msg->data.enroll.finger.gid,
                     msg->data.enroll.samples_remaining);
             break;
         case FINGERPRINT_TEMPLATE_REMOVED:
+            ALOGD("onRemove(fid=%d, gid=%d)",
+                    msg->data.removed.finger.fid,
+                    msg->data.removed.finger.gid);
             callback->onRemoved(device,
                     msg->data.removed.finger.fid,
                     msg->data.removed.finger.gid);
             break;
         case FINGERPRINT_TEMPLATE_ENUMERATING:
+            ALOGD("onEnumerate(fid=%d, gid=%d, rem=%d)",
+                    msg->data.enumerated.finger.fid,
+                    msg->data.enumerated.finger.gid,
+                    msg->data.enumerated.remaining_templates);
             callback->onEnumerate(device,
                     msg->data.enumerated.finger.fid,
                     msg->data.enumerated.finger.gid,
@@ -104,6 +120,7 @@ void FingerprintDaemonProxy::notifyKeystore(const uint8_t *auth_token, const siz
             ALOGE("Unable to communicate with KeyStore");
         }
     }
+    ALOGE("notifyKeyStore");
 }
 
 void FingerprintDaemonProxy::init(const sp<IFingerprintDaemonCallback>& callback) {
@@ -116,8 +133,9 @@ void FingerprintDaemonProxy::init(const sp<IFingerprintDaemonCallback>& callback
 
 int32_t FingerprintDaemonProxy::enroll(const uint8_t* token, ssize_t tokenSize, int32_t groupId,
         int32_t timeout) {
+    ALOG(LOG_VERBOSE, LOG_TAG, "enroll(gid=%d, timeout=%d)\n", groupId, timeout);
     if (tokenSize != sizeof(hw_auth_token_t) ) {
-        ALOGE("enroll() : invalid token size %zu\n", tokenSize);
+        ALOG(LOG_VERBOSE, LOG_TAG, "enroll() : invalid token size %zu\n", tokenSize);
         return -1;
     }
     const hw_auth_token_t* authToken = reinterpret_cast<const hw_auth_token_t*>(token);
@@ -133,24 +151,30 @@ int32_t FingerprintDaemonProxy::postEnroll() {
 }
 
 int32_t FingerprintDaemonProxy::stopEnrollment() {
+    ALOG(LOG_VERBOSE, LOG_TAG, "stopEnrollment()\n");
     return mDevice->cancel(mDevice);
 }
 
 int32_t FingerprintDaemonProxy::authenticate(uint64_t sessionId, uint32_t groupId) {
+    ALOG(LOG_VERBOSE, LOG_TAG, "authenticate(sid=%" PRId64 ", gid=%d)\n", sessionId, groupId);
     return mDevice->authenticate(mDevice, sessionId, groupId);
 }
 
 int32_t FingerprintDaemonProxy::stopAuthentication() {
+    ALOG(LOG_VERBOSE, LOG_TAG, "stopAuthentication()\n");
     return mDevice->cancel(mDevice);
 }
 
 int32_t FingerprintDaemonProxy::remove(int32_t fingerId, int32_t groupId) {
+    ALOG(LOG_VERBOSE, LOG_TAG, "remove(fid=%d, gid=%d)\n", fingerId, groupId);
     return mDevice->remove(mDevice, groupId, fingerId);
 }
 
 int32_t FingerprintDaemonProxy::enumerate() {
+    ALOG(LOG_VERBOSE, LOG_TAG, "enumerate()\n");
     return mDevice->enumerate(mDevice);
 }
+
 
 int32_t FingerprintDaemonProxy::cancel() {
     int ret = mDevice->cancel(mDevice);
@@ -171,13 +195,14 @@ int32_t FingerprintDaemonProxy::setActiveGroup(int32_t groupId, const uint8_t* p
     char path_name[PATH_MAX];
     memcpy(path_name, path, pathlen);
     path_name[pathlen] = '\0';
+    ALOG(LOG_VERBOSE, LOG_TAG, "setActiveGroup(%d, %s, %zu)", groupId, path_name, pathlen);
     return mDevice->set_active_group(mDevice, groupId, path_name);
 }
 
 int64_t FingerprintDaemonProxy::openHal() {
     int err;
     const hw_module_t *hw_module = NULL;
-
+    ALOG(LOG_VERBOSE, LOG_TAG, "nativeOpenHal()\n");
     if (0 != (err = hw_get_module(FINGERPRINT_HARDWARE_MODULE_ID, &hw_module))) {
         ALOGE("Can't open fingerprint HW Module, error: %d", err);
         return 0;
@@ -223,6 +248,7 @@ int64_t FingerprintDaemonProxy::openHal() {
 }
 
 int32_t FingerprintDaemonProxy::closeHal() {
+    ALOG(LOG_VERBOSE, LOG_TAG, "nativeCloseHal()\n");
     if (mDevice == NULL) {
         ALOGE("No valid device");
         return -ENOSYS;
@@ -237,6 +263,7 @@ int32_t FingerprintDaemonProxy::closeHal() {
 }
 
 void FingerprintDaemonProxy::binderDied(const wp<IBinder>& who) {
+    ALOGD("binder died");    
     int err;
     if (0 != (err = closeHal())) {
         ALOGE("Can't close fingerprint device, error: %d", err);

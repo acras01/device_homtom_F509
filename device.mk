@@ -44,7 +44,7 @@ endif
 PRODUCT_COPY_FILES += $(LOCAL_PATH)/ht120.mtc:$(TARGET_COPY_OUT_VENDOR)/etc/.tp/.ht120.mtc:mtk
 
 # libatomic
-PRODUCT_PACKAGES += \libatomic
+PRODUCT_PACKAGES += libatomic
 
 # alps/vendor/mediatek/proprietary/external/GeoCoding/Android.mk
 
@@ -153,19 +153,32 @@ PRODUCT_COPY_FILES += frameworks/av/media/libstagefright/data/media_codecs_googl
 ifeq ($(strip $(MTK_FINGERPRINT_SUPPORT)), yes) 
     PRODUCT_COPY_FILES +=frameworks/native/data/etc/android.hardware.fingerprint.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.fingerprint.xml
 PRODUCT_PACKAGES += android.hardware.biometrics.fingerprint@2.0-service-custom
-PRODUCT_PACKAGES += android.hardware.biometrics.fingerprint@2.1
+#PRODUCT_PACKAGES += android.hardware.biometrics.fingerprint@2.1
 #PRODUCT_PACKAGES += android.hardware.biometrics.fingerprint@2.1-service
 #PRODUCT_COPY_FILES += device/homtom/F509/goodix/bin/fingerprintd:system/bin/fingerprintd
-PRODUCT_COPY_FILES += device/homtom/F509/goodix/bin/gx_fpd:system/bin/gx_fpd
-PRODUCT_COPY_FILES += device/homtom/F509/goodix/bin/gx_fpcmd:system/bin/gx_fpcmd
-PRODUCT_COPY_FILES += device/homtom/F509/goodix/lib64/libfp_client.so:system/lib64/libfp_client.so
-PRODUCT_COPY_FILES += device/homtom/F509/goodix/lib64/libalgoandroid.so:system/lib64/libalgoandroid.so
-PRODUCT_COPY_FILES += device/homtom/F509/goodix/lib64/libfpservice.so:system/lib64/libfpservice.so
-PRODUCT_COPY_FILES += device/homtom/F509/goodix/lib64/libfprint-x64.so:system/lib64/libfprint-x64.so
-PRODUCT_COPY_FILES += device/homtom/F509/goodix/lib64/hw/fingerprint.goodix.so:system/lib64/hw/fingerprint.goodix.so
-PRODUCT_COPY_FILES += device/homtom/F509/goodix/lib64/hw/fingerprint.microarray.so:system/lib64/hw/fingerprint.microarray.so
-PRODUCT_COPY_FILES += device/homtom/F509/goodix/lib64/hw/gxfingerprint.default.so:system/lib64/hw/gxfingerprint.default.so
-PRODUCT_COPY_FILES += device/homtom/F509/goodix/lib64/hw/fingerprint.default.so:system/lib64/hw/fingerprint.default.so
+PRODUCT_COPY_FILES += device/homtom/F509/goodix/bin/gx_fpd:$(TARGET_COPY_OUT_VENDOR)/bin/gx_fpd
+PRODUCT_COPY_FILES += device/homtom/F509/goodix/etc/init/gx_fpd.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/gx_fpd.rc
+PRODUCT_COPY_FILES += device/homtom/F509/goodix/bin/gx_fpcmd:$(TARGET_COPY_OUT_VENDOR)/bin/gx_fpcmd
+PRODUCT_COPY_FILES += device/homtom/F509/goodix/lib64/libfp_client.so:$(TARGET_COPY_OUT_VENDOR)/lib64/libfp_client.so
+PRODUCT_COPY_FILES += device/homtom/F509/goodix/lib64/libalgoandroid.so:$(TARGET_COPY_OUT_VENDOR)/lib64/libalgoandroid.so
+PRODUCT_COPY_FILES += device/homtom/F509/goodix/lib64/libfpservice.so:$(TARGET_COPY_OUT_VENDOR)/lib64/libfpservice.so
+PRODUCT_COPY_FILES += device/homtom/F509/goodix/lib64/libfprint-x64.so:$(TARGET_COPY_OUT_VENDOR)/lib64/libfprint-x64.so
+#PRODUCT_COPY_FILES += device/homtom/F509/goodix/lib64/hw/fingerprint.goodix.so:$(TARGET_COPY_OUT_VENDOR)/lib64/hw/fingerprint.goodix.so
+#PRODUCT_COPY_FILES += device/homtom/F509/goodix/lib64/hw/fingerprint.default.so:$(TARGET_COPY_OUT_VENDOR)/lib64/hw/fingerprint.default.so
+PRODUCT_COPY_FILES += device/homtom/F509/goodix/lib64/hw/fingerprint.goodix.so:$(TARGET_COPY_OUT_VENDOR)/lib64/hw/fingerprint.default.so
+#PRODUCT_COPY_FILES += device/homtom/F509/goodix/lib64/hw/fingerprint.microarray.so:$(TARGET_COPY_OUT_VENDOR)/lib64/hw/fingerprint.microarray.so
+#PRODUCT_COPY_FILES += device/homtom/F509/goodix/lib64/hw/gxfingerprint.default.so:$(TARGET_COPY_OUT_VENDOR)/lib64/hw/gxfingerprint.default.so
+PRODUCT_COPY_FILES += device/homtom/F509/goodix/lib64/hw/gxfingerprint.default_patched.so:$(TARGET_COPY_OUT_VENDOR)/lib64/hw/gxfingerprint.default.so
+
+#Firmware
+#PRODUCT_COPY_FILES += device/homtom/F509/firmware/catcher_filter_1_lwg_n.bin:system/etc/firmware/catcher_filter_1_lwg_n.bin
+#PRODUCT_COPY_FILES += device/homtom/F509/firmware/dsp_1_lwg_n.bin:system/etc/firmware/dsp_1_lwg_n.bin
+#PRODUCT_COPY_FILES += device/homtom/F509/firmware/em_filter_1_lwg_n.bin:system/etc/firmware/em_filter_1_lwg_n.bin
+#PRODUCT_COPY_FILES += device/homtom/F509/firmware/modem_1_lwg_n.img:system/etc/firmware/modem_1_lwg_n.img
+#PRODUCT_COPY_FILES += device/homtom/F509/firmware/ROMv2_lm_patch_1_0_hdr.bin:system/etc/firmware/ROMv2_lm_patch_1_0_hdr.bin
+#PRODUCT_COPY_FILES += device/homtom/F509/firmware/ROMv2_lm_patch_1_1_hdr.bin:system/etc/firmware/ROMv2_lm_patch_1_1_hdr.bin
+#PRODUCT_COPY_FILES += device/homtom/F509/firmware/WIFI_RAM_CODE_6735:system/etc/firmware/WIFI_RAM_CODE_6735
+#PRODUCT_COPY_FILES += device/homtom/F509/firmware/WMT_SOC.cfg:system/etc/firmware/WMT_SOC.cfg
 endif
 
 #Fingerprint(Goodix) Begin

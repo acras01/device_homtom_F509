@@ -1,0 +1,40 @@
+#============= crash_dump ==============
+allow crash_dump gx_fpd_lib_file:file { getattr open read };
+allow crash_dump system_data_file:dir write;
+allow crash_dump system_data_file:file { getattr open read };
+
+#============= idmap ==============
+allow idmap installd:file read;
+
+#============= kernel ==============
+#allow kernel self:capability dac_override;
+
+#============= system_server ==============
+#allow system_server app_data_file:file open;
+#allow system_server dalvikcache_data_file:file execute;
+
+#============= webview_zygote ==============
+allow webview_zygote proc:file { getattr open read };
+
+#============= zygote ==============
+allow zygote apk_data_file:dir { add_name remove_name write };
+allow zygote apk_data_file:file { create unlink write };
+allow zygote input_device:chr_file { ioctl open read write };
+allow zygote input_device:dir { open read };
+#allow zygote system_data_file:file write;
+allow zygote system_file:dir { add_name remove_name };
+allow zygote vendor_app_file:dir { open read };
+
+#============= shell ==============
+#allow shell kernel:system syslog_read;
+allow shell kmsg_device:chr_file { open read };
+
+#============= mnld ==============
+allow mnld system_data_file:file { getattr open read };
+
+#============= mtk_hal_audio ==============
+allow mtk_hal_audio system_data_file:file { getattr read };
+
+#============= nvram_daemon ==============
+allow nvram_daemon system_data_file:file read;
+

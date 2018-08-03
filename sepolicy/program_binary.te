@@ -1,0 +1,4 @@
+allow program_binary hal_configstore_ISurfaceFlingerConfigs:hwservice_manager find;
+allow program_binary hal_configstore_default:binder call;
+allow program_binary hwservicemanager:binder call;
+
