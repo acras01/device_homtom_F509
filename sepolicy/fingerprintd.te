@@ -1,9 +1,16 @@
 type fingerprintd_custom_service, service_manager_type;
 
 r_dir_file(fingerprintd, firmware_file)
+<<<<<<< HEAD
 #allow fingerprintd fpc_data_file:dir rw_dir_perms;
 #allow fingerprintd fpc_data_file:sock_file { create unlink };
 #allow fingerprintd fpc_sysfs:file rw_file_perms;
+=======
+
+allow fingerprintd fpc_data_file:dir rw_dir_perms;
+allow fingerprintd fpc_data_file:sock_file { create unlink };
+allow fingerprintd fpc_sysfs:file rw_file_perms;
+>>>>>>> e22afa2ae83ae920c9aaae2d3657404b54ff4d30
 allow fingerprintd storage_file:dir search;
 allow fingerprintd tee_device:chr_file rw_file_perms;
 allow fingerprintd uhid_device:chr_file rw_file_perms;
@@ -14,6 +21,7 @@ allow fingerprintd fuse:dir search;
 allow fingerprintd gx_fpd:binder { transfer call };
 allow fingerprintd gx_fpd_service:service_manager { find };
 allow fingerprintd fingerprint_service:service_manager { find };
+<<<<<<< HEAD
 #allow fingerprintd fingerprint_custom_service:service_manager { find };
 
 # For Goodix fingerprint
@@ -42,6 +50,8 @@ allow fingerprintd gx_fpd_data_file:dir create_dir_perms;
 file_type_auto_trans(fingerprintd, system_data_file, fingerprintd_data_file)
 file_type_auto_trans(gx_fpd, system_data_file, fingerprintd_data_file)
 file_type_auto_trans(hal_fingerprint_default, system_data_file, fingerprintd_data_file)
+=======
+>>>>>>> e22afa2ae83ae920c9aaae2d3657404b54ff4d30
 
 set_prop(fingerprintd, system_prop)
 

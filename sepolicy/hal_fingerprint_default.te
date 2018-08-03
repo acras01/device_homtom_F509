@@ -1,4 +1,15 @@
 allow hal_fingerprint_default gx_fpd_service:service_manager { find };
+allow hal_fingerprint_default fpc_sysfs:file { rw_file_perms };
+allow hal_fingerprint_default tee_device:chr_file { rw_file_perms };
+allow hal_fingerprint_default firmware_file:dir { search };
+allow hal_fingerprint_default firmware_file:file { r_file_perms };
+allow hal_fingerprint_default fpc_data_file:dir rw_dir_perms;
+allow hal_fingerprint_default fpc_data_file:sock_file create_file_perms;
+allow hal_fingerprint_default uhid_device:chr_file rw_file_perms;
+allow hal_fingerprint_default keystore_service:service_manager { find };
+allow hal_fingerprint_default keystore:keystore_key { add_auth };
+allow hal_fingerprint_default storage_file:dir { search };
+allow hal_fingerprint_default storage_file:lnk_file read;
 
 #allow hal_fingerprint_default fpc_sysfs:file { rw_file_perms };
 
@@ -48,6 +59,7 @@ binder_call(hal_fingerprint_default, keystore)
 add_service(hal_fingerprint_default, fingerprintd_custom_service);
 
 allow hal_fingerprint_default fingerprint_service:service_manager find;
+<<<<<<< HEAD
 #allow hal_fingerprint_default fingerprint_custom_service:service_manager find;
 allow hal_fingerprint_default mnt_user_file:dir search;
 
@@ -60,3 +72,6 @@ allow hal_fingerprint_default unlabeled:file { getattr open read };
 
 #allow hal_fingerprint_default default_android_service:service_manager { add find };
 
+=======
+allow hal_fingerprint_default mnt_user_file:dir search;
+>>>>>>> e22afa2ae83ae920c9aaae2d3657404b54ff4d30

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 allow servicemanager hal_fingerprint_default:dir search;
 allow servicemanager hal_fingerprint_default:file { open read };
 allow servicemanager hal_fingerprint_default:process getattr;
@@ -8,3 +9,8 @@ allow servicemanager gx_fpd:process getattr;
 
 allow servicemanager nonplat_service_contexts_file:file { getattr open read };
 
+=======
+allow servicemanager hal_fingerprint_default:dir { search };
+allow servicemanager hal_fingerprint_default:file { r_file_perms };
+allow servicemanager hal_fingerprint_default:process { getattr };
+>>>>>>> e22afa2ae83ae920c9aaae2d3657404b54ff4d30
