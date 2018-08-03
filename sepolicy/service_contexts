@@ -1,11 +1,6 @@
 # Goodix Fingerprint
 goodix.fp                        u:object_r:gx_fpd_service:s0
-<<<<<<< HEAD
 #goodix.fp                        u:object_r:fingerprint_service:s0
 #persist.sys.fp.sensor            u:object_r:fp_service:s0
 android.hardware.fingerprint.IFingerprintCustomDaemon       u:object_r:fingerprintd_custom_service:s0
 
-=======
-#persist.sys.fp.sensor            u:object_r:fp_service:s0
-android.hardware.fingerprint.IFingerprintCustomDaemon       u:object_r:fingerprintd_custom_service:s0
->>>>>>> e22afa2ae83ae920c9aaae2d3657404b54ff4d30

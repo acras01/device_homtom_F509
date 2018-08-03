@@ -1,13 +1,9 @@
 #type gx_fpd, domain;
 type gx_fpd_exec, exec_type, file_type;
-<<<<<<< HEAD
 #type gx_fpd_service, service_manager_type;
 #type gx_fpd_service, app_api_service, system_server_service, service_manager_type;
 type gx_fpd_service, app_api_service, service_manager_type;
 typeattribute gx_fpd mlstrustedsubject;
-=======
-type gx_fpd_service, service_manager_type;
->>>>>>> e22afa2ae83ae920c9aaae2d3657404b54ff4d30
 
 # gx_fpd
 init_daemon_domain(gx_fpd)
@@ -48,26 +44,9 @@ allow gx_fpd self:{ netlink_socket netlink_generic_socket } create_socket_perms_
 set_prop(gx_fpd, system_prop)
 
 # allow gx_fpd_lib_file
-<<<<<<< HEAD
 allow gx_fpd gx_fpd_lib_file:file { create_file_perms execute };
 allow gx_fpd gx_fpd_lib_file:chr_file { rw_file_perms setattr };
 allow gx_fpd gx_fpd_lib_file:dir ra_dir_perms;
-=======
-allow gx_fpd gx_fpd_lib_file:file { create_file_perms getattr read };
-allow gx_fpd gx_fpd_lib_file:chr_file { rw_file_perms setattr };
-allow gx_fpd gx_fpd_lib_file:dir ra_dir_perms;
-
-# allow gx_fp_lib_file
-allow gx_fpd gx_fp_lib_file:file { create_file_perms getattr read };
-allow gx_fpd gx_fp_lib_file:chr_file { rw_file_perms setattr };
-
-allow gx_fpd fingerprintd:binder { transfer call };
-allow gx_fpd fuse:dir search;
-allow gx_fpd fuse:file { getattr open append };
-allow gx_fpd self:capability dac_override;
-allow gx_fpd storage_file:dir search;
-allow gx_fpd storage_file:lnk_file read;
->>>>>>> e22afa2ae83ae920c9aaae2d3657404b54ff4d30
 
 # allow gx_fp_lib_file
 allow gx_fpd gx_fp_lib_file:file { create_file_perms execute };
@@ -111,8 +90,6 @@ allow gx_fpd system_file:file rx_file_perms;
 
 # allow system_data_file
 file_type_auto_trans(gx_fpd, system_data_file, gx_fpd_data_file)
-file_type_auto_trans(fingerprintd, system_data_file, gx_fpd_data_file)
-file_type_auto_trans(hal_fingerprint_default, system_data_file, gx_fpd_data_file)
 
 # allow SD-Card
 allow gx_fpd fuse:dir create_dir_perms;
