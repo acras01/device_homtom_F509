@@ -1,0 +1,5 @@
+allow zygote apk_data_file:dir { add_name remove_name write };
+allow zygote apk_data_file:file { create unlink write };
+allow zygote input_device:chr_file { ioctl open read write };
+allow zygote input_device:dir { open read };
+allow zygote system_file:dir { add_name remove_name };

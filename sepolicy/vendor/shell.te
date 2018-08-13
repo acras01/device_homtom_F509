@@ -1,0 +1,1 @@
+allow shell kmsg_device:chr_file { open read };
