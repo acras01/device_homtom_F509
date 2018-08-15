@@ -25,16 +25,14 @@ allow hal_fingerprint_custom firmware_file:file { r_file_perms };
 #allow hal_fingerprint_custom fpc_data_file:sock_file create_file_perms;
 
 # allow gx_fpd_lib_file
-#allow hal_fingerprint_custom gx_fpd_lib_file:file { create_file_perms execute };
-allow hal_fingerprint_custom gx_fpd_lib_file:file create_file_perms;
-allow hal_fingerprint_custom gx_fpd_lib_file:chr_file { ioctl read write create getattr setattr lock append map unlink open };
-allow hal_fingerprint_custom gx_fpd_lib_file:dir ra_dir_perms;
+#allow hal_fingerprint_custom gx_fpd_lib_file:file { read open getattr execute map };
+#allow hal_fingerprint_custom gx_fpd_lib_file:chr_file { ioctl read getattr lock map open };
+#allow hal_fingerprint_custom gx_fpd_lib_file:dir r_dir_perms;
 
 # allow gx_fp_lib_file
-#allow hal_fingerprint_custom gx_fp_lib_file:file { create_file_perms execute };
-allow hal_fingerprint_custom gx_fp_lib_file:file create_file_perms;
-allow hal_fingerprint_custom gx_fp_lib_file:chr_file { ioctl read write create getattr setattr lock append map unlink open };
-allow hal_fingerprint_custom gx_fp_lib_file:dir ra_dir_perms;
+#allow hal_fingerprint_custom gx_fp_lib_file:file { read open getattr execute map };
+#allow hal_fingerprint_custom gx_fp_lib_file:chr_file { ioctl read getattr lock map open };
+#allow hal_fingerprint_custom gx_fp_lib_file:dir r_dir_perms;
 
 
 # allow fingerprintd_data_file
@@ -71,10 +69,5 @@ allow hal_fingerprint_custom mnt_user_file:dir search;
 
 allow hal_fingerprint_custom binder_device:chr_file { ioctl open read write };
 
-
-
-#allow hal_fingerprint_custom unlabeled:file { execute getattr open read };
 allow hal_fingerprint_custom unlabeled:file { getattr open read };
-
-#allow hal_fingerprint_custom default_android_service:service_manager { add find };
 

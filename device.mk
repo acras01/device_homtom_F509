@@ -158,6 +158,7 @@ PRODUCT_PACKAGES += android.hardware.biometrics.fingerprint@2.0-service-custom
 #PRODUCT_COPY_FILES += device/homtom/F509/goodix/bin/fingerprintd:system/bin/fingerprintd
 PRODUCT_COPY_FILES += device/homtom/F509/goodix/bin/gx_fpd:$(TARGET_COPY_OUT_VENDOR)/bin/gx_fpd
 PRODUCT_COPY_FILES += device/homtom/F509/goodix/etc/init/gx_fpd.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/gx_fpd.rc
+PRODUCT_COPY_FILES += device/homtom/F509/goodix/etc/gx_fpd_fix.sh:$(TARGET_COPY_OUT_VENDOR)/etc/gx_fpd_fix.sh
 PRODUCT_COPY_FILES += device/homtom/F509/goodix/bin/gx_fpcmd:$(TARGET_COPY_OUT_VENDOR)/bin/gx_fpcmd
 PRODUCT_COPY_FILES += device/homtom/F509/goodix/lib64/libfp_client.so:$(TARGET_COPY_OUT_VENDOR)/lib64/libfp_client.so
 PRODUCT_COPY_FILES += device/homtom/F509/goodix/lib64/libalgoandroid.so:$(TARGET_COPY_OUT_VENDOR)/lib64/libalgoandroid.so

@@ -2,23 +2,20 @@ on boot
     chown system system  /dev/goodix_fp
     chmod 0644 /dev/goodix_fp
 
+service gx_fpd_fix /vendor/bin/sh /vendor/etc/gx_fpd_fix.sh
+    class post-fs-data
+#    seclabel u:object_r:shell_exec:s0
+    user root
+    group shell
+    oneshot
+    disabled
+
 on post-fs-data
-    mkdir /data/system/users/0/fpdata
-    chown system system /data/system/users/0/fpdata
-    chmod 0777 /data/system/users/0/fpdata
-
-    chown system system /data/system/users/0/fpdata/fpdb
-    chmod 0777 /data/system/users/0/fpdata/fpdb
-
-    chown system system /data/system/fingerprint
-    chmod 0777 /data/system/fingerprint
-
-    mkdir /data/system/fingerprint/0_0
-    chown system system /data/system/fingerprint/0_0
-    chmod 0777 /data/system/fingerprint/0_0
-
+    chown root root  /vendor/etc/gx_fpd_fix.sh
+    chmod 0777 /vendor/etc/gx_fpd_fix.sh
+    start gx_fpd_fix
 
 service gx_fpd /vendor/bin/gx_fpd
     class late_start
     user system
-    group system 
+    group system

@@ -1,4 +1,5 @@
 TARGET_BOARD_PLATFORM := mt6737m
+DEVICE_PATH := device/homtom/F509
 
 # Use the non-open-source part, if present
 -include vendor/mediatek/F509/BoardConfigVendor.mk
@@ -19,7 +20,9 @@ TARGET_NEEDS_PLATFORM_TEXT_RELOCATIONS := true
 TARGET_LD_SHIM_LIBS := /vendor/lib64/hw/gxfingerprint.default.so|libatomic.so
 
 #Fingerprint
-BOARD_SEPOLICY_DIRS += device/homtom/F509/sepolicy
+#BOARD_SEPOLICY_DIRS += (DEVICE_PATH)/sepolicy
+BOARD_PLAT_PRIVATE_SEPOLICY_DIR += $(DEVICE_PATH)/sepolicy/private
+BOARD_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/vendor
 
 MTK_INTERNAL_CDEFS := $(foreach t,$(AUTO_ADD_GLOBAL_DEFINE_BY_NAME),$(if $(filter-out no NO none NONE false FALSE,$($(t))),-D$(t)))
 MTK_INTERNAL_CDEFS += $(foreach t,$(AUTO_ADD_GLOBAL_DEFINE_BY_VALUE),$(if $(filter-out no NO none NONE false FALSE,$($(t))),$(foreach v,$(shell echo $($(t)) | tr '[a-z]' '[A-Z]'),-D$(v))))

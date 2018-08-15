@@ -1,0 +1,4 @@
+allow hwservicemanager program_binary:dir search;
+allow hwservicemanager program_binary:file { open read };
+allow hwservicemanager program_binary:process getattr;
+

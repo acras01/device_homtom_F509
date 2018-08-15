@@ -1,0 +1,11 @@
+#type fpc_data_file, file_type, data_file_type;
+#type fpc_socket, file_type;
+#type fpc_sysfs, fs_type, sysfs_type;
+
+type gx_fp_lib_file, file_type, data_file_type;
+type gx_fpd_lib_file, file_type, data_file_type;
+#type gx_fp_data_file, file_type, data_file_type;
+type gx_fpd_data_file, file_type, data_file_type;
+
+# Default type for anything under /firmware.
+type firmware_file, fs_type, contextmount_type;

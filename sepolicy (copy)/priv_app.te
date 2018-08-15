@@ -59,9 +59,8 @@ allow priv_app fsck_exec:file read;
 
 allow priv_app gatekeeperd_exec:file read;
 
-#allow priv_app gx_fp_lib_file:file getattr;
-#allow priv_app gx_fpd_lib_file:file getattr;
-allow priv_app same_process_hal_file:file getattr;
+allow priv_app gx_fp_lib_file:file getattr;
+allow priv_app gx_fpd_lib_file:file getattr;
 allow priv_app mac_perms_file:file getattr;
 allow priv_app mnt_media_rw_file:dir getattr;
 allow priv_app nfc_data_file:dir getattr;

@@ -1,6 +1,9 @@
-type gx_fpd, domain, binder_in_vendor_violators;
-type gx_fpd_exec, exec_type, vendor_file_type, file_type;
-#typeattribute gx_fpd mlstrustedsubject;
+#type gx_fpd, domain;
+type gx_fpd_exec, exec_type, file_type;
+#type gx_fpd_service, service_manager_type;
+#type gx_fpd_service, app_api_service, system_server_service, service_manager_type;
+type gx_fpd_service, app_api_service, service_manager_type;
+typeattribute gx_fpd mlstrustedsubject;
 
 # gx_fpd
 init_daemon_domain(gx_fpd)
@@ -8,15 +11,12 @@ binder_use(gx_fpd)
 binder_call(gx_fpd, binderservicedomain)
 binder_call(gx_fpd, appdomain)
 binder_call(gx_fpd, fingerprintd);
-binder_call(gx_fpd, hal_fingerprint_custom)
+binder_call(gx_fpd, hal_fingerprint_default)
 binder_service(gx_fpd)
 
 # need to find KeyStore and add self
 allow gx_fpd gx_fpd_service:service_manager { add find };
 allow gx_fpd fingerprintd_service:service_manager find;
-
-#register service in service manager
-allow gx_fpd default_android_service:service_manager find;
 
 # Need to add auth tokens to KeyStore
 use_keystore(gx_fpd)
@@ -31,29 +31,28 @@ allow gx_fpd gx_fpd_device:chr_file rw_file_perms;
 
 #Allow access to tee device
 allow gx_fpd tee_device:chr_file rw_file_perms;
+allow gx_fpd tee_device:chr_file { open read ioctl write };
 
 # Allow access to ion device
 allow gx_fpd ion_device:chr_file rw_file_perms;
+allow gx_fpd ion_device:chr_file { ioctl open read };
 
 #allow create socket
-allow gx_fpd self:socket create_socket_perms_no_ioctl;
 allow gx_fpd self:{ netlink_socket netlink_generic_socket } create_socket_perms_no_ioctl;
 
 #allow read/write property
 set_prop(gx_fpd, system_prop)
 
-#allow gx_fpd_lib_file
-#allow gx_fpd gx_fpd_lib_file:file { read open getattr execute map };
-#allow gx_fpd gx_fpd_lib_file:chr_file { ioctl read getattr lock map open };
-#allow gx_fpd gx_fpd_lib_file:dir r_dir_perms;
+# allow gx_fpd_lib_file
+allow gx_fpd gx_fpd_lib_file:file { create_file_perms execute };
+allow gx_fpd gx_fpd_lib_file:chr_file { rw_file_perms setattr };
+allow gx_fpd gx_fpd_lib_file:dir ra_dir_perms;
 
 # allow gx_fp_lib_file
-#allow gx_fpd gx_fp_lib_file:file { read open getattr execute map };
-#allow gx_fpd gx_fp_lib_file:chr_file { ioctl read getattr lock map open };
-#allow gx_fpd gx_fp_lib_file:dir r_dir_perms;
+allow gx_fpd gx_fp_lib_file:file { create_file_perms execute };
+allow gx_fpd gx_fp_lib_file:chr_file { rw_file_perms setattr };
 
 allow gx_fpd fingerprintd:binder { transfer call };
-allow gx_fpd hal_fingerprint_custom:binder { transfer call };
 
 allow gx_fpd self:capability dac_override;
 
@@ -76,18 +75,21 @@ allow gx_fpd gx_fpd_device:chr_file { rw_file_perms setattr };
 
 # allow fingerprintd_data_file
 allow gx_fpd fingerprintd_data_file:file create_file_perms;
-allow gx_fpd fingerprintd_data_file:chr_file { ioctl read write create getattr setattr lock append map unlink open };
+allow gx_fpd fingerprintd_data_file:chr_file { rw_file_perms setattr };
 r_dir_file(gx_fpd, fingerprintd_data_file)
 allow gx_fpd fingerprintd_data_file:dir create_dir_perms;
 
 # allow gx_fpd_data_file
 allow gx_fpd gx_fpd_data_file:file create_file_perms;
-allow gx_fpd gx_fpd_data_file:chr_file { ioctl read write create getattr setattr lock append map unlink open };
+allow gx_fpd gx_fpd_data_file:chr_file { rw_file_perms setattr };
 r_dir_file(gx_fpd, gx_fpd_data_file)
 allow gx_fpd gx_fpd_data_file:dir create_dir_perms;
 
 # allow system_file
 allow gx_fpd system_file:file rx_file_perms;
+
+# allow system_data_file
+file_type_auto_trans(gx_fpd, system_data_file, gx_fpd_data_file)
 
 # allow SD-Card
 allow gx_fpd fuse:dir create_dir_perms;
@@ -109,3 +111,5 @@ allow gx_fpd rootfs:lnk_file getattr;
 #allow gx_fpd default_android_service:service_manager { add find };
 #allow gx_fpd eas_sched:dir { r_dir_perms };
 #allow gx_fpd eas_sched:file { rw_file_perms };
+
+
