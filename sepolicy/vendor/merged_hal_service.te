@@ -1,2 +1,0 @@
-allow merged_hal_service sysfs_devices_system_cpu:file write;
-

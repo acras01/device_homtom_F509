@@ -1,0 +1,3 @@
+allow init shell_exec:process { noatsecure rlimitinh siginh transition };
+allow init vendor_shell_exec:process { noatsecure rlimitinh siginh transition };
+

@@ -6,5 +6,3 @@ allow servicemanager gx_fpd:dir r_dir_perms;
 allow servicemanager gx_fpd:file r_file_perms;
 allow servicemanager gx_fpd:process getattr;
 
-allow servicemanager nonplat_service_contexts_file:file { getattr open read };
-

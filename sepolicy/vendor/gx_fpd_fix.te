@@ -1,14 +1,14 @@
 type gx_fpd_fix, domain;
 type gx_fpd_fix_exec, exec_type, vendor_file_type, file_type;
-typeattribute gx_fpd_fix mlstrustedsubject;
 
 init_daemon_domain(gx_fpd_fix)
 
-allow gx_fpd_fix { vendor_shell_exec vendor_toolbox_exec }:file rx_file_perms;
+allow gx_fpd_fix vendor_shell_exec:file rx_file_perms;
+allow gx_fpd_fix vendor_toolbox_exec:file rx_file_perms;
+allow gx_fpd_fix fingerprintd_data_file:dir { getattr open read search setattr };
+allow gx_fpd_fix fingerprintd_data_file:file { getattr setattr };
+allow gx_fpd_fix gx_fpd_data_file:dir { getattr open read search setattr };
+allow gx_fpd_fix gx_fpd_data_file:file { getattr setattr };
+allow gx_fpd_fix self:capability { chown dac_override fowner };
+allow gx_fpd_fix system_data_file:dir getattr;
 
-
-# allow gx_fpd_data_file
-allow gx_fpd_fix gx_fpd_data_file:file create_file_perms;
-allow gx_fpd_fix gx_fpd_data_file:chr_file { ioctl read write create getattr setattr lock append map unlink open };
-r_dir_file(gx_fpd_fix, gx_fpd_data_file)
-allow gx_fpd_fix gx_fpd_data_file:dir create_dir_perms;
