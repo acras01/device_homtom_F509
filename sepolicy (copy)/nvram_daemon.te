@@ -1,1 +1,0 @@
-allow nvram_daemon system_data_file:file read;

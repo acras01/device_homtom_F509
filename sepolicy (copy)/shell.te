@@ -1,4 +1,0 @@
-allow shell kmsg_device:chr_file { open read };
-
-allow shell gx_fpd_data_file:dir { getattr open read };
-allow shell gx_fpd_data_file:file getattr;

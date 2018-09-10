@@ -1,2 +1,0 @@
-allow bluetooth app_data_file:file open;
-

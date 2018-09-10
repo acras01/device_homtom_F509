@@ -1,5 +1,0 @@
-#allow crash_dump gx_fpd_lib_file:file { getattr open read };
-allow crash_dump same_process_hal_file:file { getattr open read };
-allow crash_dump system_data_file:dir write;
-allow crash_dump system_data_file:file { getattr open read };
-
